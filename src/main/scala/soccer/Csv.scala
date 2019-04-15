@@ -17,8 +17,10 @@ object Csv extends App with TestDbProvider {
   val sc = new SparkContext(conf)
 
 
-  val tmax_raw = sc.textFile(getClass.getResource("soccer/card_detail.csv").getPath)
-  val tmax_c10 = tmax_raw.map(x => x.split(",")).map(x => Tmax(UUID.fromString(x(0)), x(1), x(2), x(3), x(4), x(5), x(6), x(7)))
+  val tmax_raw = sc.textFile(getClass.getResource("/soccer/card_detail.csv").getPath)
+  val tmax_c10 = tmax_raw
+    .map(x => x.split(","))
+    .map(x => Tmax(UUID.fromString(x(0)), x(1), x(2), x(3), x(4), x(5), x(6), x(7)))
 
   // update database with new elements :
   import com.outworkers.phantom.dsl._
