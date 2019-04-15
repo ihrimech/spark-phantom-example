@@ -17,7 +17,7 @@ lazy val app = (project in file(".")).
       // "com.datastax.spark" % "spark-cassandra-connector_2.11" % "2.4.1",
       "com.outworkers" %% "phantom-dsl" % "2.40.0"
     ),
-    excludeDependencies += "log4j" % "log4j"
+    excludeDependencies += "org.slf4j" % "log4j-over-slf4j"
   )
 
 assemblyMergeStrategy in assembly := {

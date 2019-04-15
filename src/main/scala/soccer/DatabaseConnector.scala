@@ -21,7 +21,7 @@ object DatabaseConnector {
 class TestDatabase(
                     override val connector: CassandraConnection
                   ) extends Database[TestDatabase](connector) {
-  object articles extends TmaxElements with Connector
+  object TmaxConnector extends TmaxElements with Connector
 }
 
 object TestDatabase extends TestDatabase(DatabaseConnector.default)
