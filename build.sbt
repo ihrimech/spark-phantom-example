@@ -20,7 +20,7 @@ lazy val app = (project in file(".")).
     excludeDependencies ++= Seq(
       "org.slf4j" % "log4j-over-slf4j"
     ),
-    dependencyOverrides += "com.google.guava" % "guava" % "15.0"
+    dependencyOverrides += "com.google.guava" % "guava" % "16.0.1"
   )
 
 assemblyMergeStrategy in assembly := {
