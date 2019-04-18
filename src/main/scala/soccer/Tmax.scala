@@ -42,4 +42,5 @@ abstract class TmaxElements extends Table[TmaxElements, Tmax] {
       .value(_.type1, tmax.type1)
       .future()
   }
+
 }

@@ -1,8 +1,11 @@
 package soccer
 
-import java.util.UUID
+import java.util.{Properties, UUID}
 
-import com.datastax.driver.core.PoolingOptions
+
+import java.util.Properties
+
+import org.apache.kafka.clients.producer.{KafkaProducer, ProducerConfig, ProducerRecord}
 import org.apache.spark.{SparkConf, SparkContext}
 
 import scala.concurrent.duration._
@@ -31,7 +34,27 @@ object Csv extends App with TestDbProvider {
       case tmax: Tmax =>
         db.TmaxConnector.myStore(tmax)
     })
-
     Await.result(toto, 10 seconds)
   }
+
+  val res = DatabaseConnector.result
+
+  val props = new Properties()
+  props.put("bootstrap.servers", "localhost:9092")
+  props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer")
+  props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer")
+
+  val producer = new KafkaProducer[String, String](props)
+
+  val TOPIC = "test"
+
+
+  res.forEach(a => {
+    val record = new ProducerRecord(TOPIC, "key", s"result is : $a")
+    producer.send(record)
+  })
+
+  producer.close()
+
 }
+
