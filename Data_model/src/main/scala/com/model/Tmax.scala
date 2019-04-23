@@ -1,5 +1,5 @@
-package soccer
 
+package com.model
 import java.util.UUID
 
 import com.outworkers.phantom.keys.PartitionKey
@@ -42,5 +42,4 @@ abstract class TmaxElements extends Table[TmaxElements, Tmax] {
       .value(_.type1, tmax.type1)
       .future()
   }
-
 }
