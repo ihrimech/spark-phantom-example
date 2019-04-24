@@ -1,4 +1,4 @@
-package soccer
+package com.model
 
 import com.datastax.driver.core.{HostDistance, PoolingOptions, SocketOptions}
 import com.model.TmaxElements

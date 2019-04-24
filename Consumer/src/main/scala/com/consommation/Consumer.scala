@@ -2,14 +2,17 @@ package com.consommation
 
 import org.apache.spark.streaming._
 import org.apache.spark.streaming.kafka010._
-import com.model.Tmax
+import com.model.{TestDbProvider, Tmax}
 import org.apache.kafka.common.TopicPartition
 import org.apache.kafka.common.serialization.StringDeserializer
-
+import com.outworkers.phantom.dsl._
 import org.apache.spark.{SparkConf, SparkContext}
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{Await, Future}
+import scala.concurrent.duration._
 
-object Consumer extends App {
+
+object Consumer extends App with TestDbProvider {
 
   val conf = new SparkConf(true)
     .setAppName("seifapp")
@@ -27,7 +30,7 @@ object Consumer extends App {
     "key.deserializer" -> classOf[StringDeserializer],
     "value.deserializer" -> classOf[TmaxDeserializer],
     "group.id" -> "spark-streaming-notes",
-    "auto.offset.reset" -> "latest"
+    "auto.offset.reset" -> "earliest"
   )
 
   val offsets = Map(new TopicPartition("test1", 0) -> 2L)
@@ -39,22 +42,20 @@ object Consumer extends App {
 
   dstream.foreachRDD { rdd =>
     // Get the offset ranges in the RDD
-    val offsetRanges = rdd.asInstanceOf[HasOffsetRanges].offsetRanges
 
     rdd.foreachPartition { iter =>
-      iter.foreach {
-        record => println(record.value())
-//        val toto = Future.sequence(partition.collect {
-//          case tmax: Tmax =>
-//            db.TmaxConnector.myStore(tmax)
-//        })
+      iter
+        .map(record => record.value())
+        .foreach { record =>
+            Await.result(db.TmaxConnector.myStore(record), 10 seconds)
+        }
       }
 
-    }
+
   }
 
   ssc.start
- // ssc.awaitTermination()
+ ssc.awaitTermination()
 
   // the above code is printing out topic details every 5 seconds
   // until you stop it.

@@ -51,7 +51,7 @@ lazy val Producer = (project in file("Producer")).
       "org.slf4j" % "log4j-over-slf4j"
     ),
     dependencyOverrides ++= Seq(
-      "io.netty" % "netty-all" % "4.1.35.Final",
+      
       "com.google.guava" % "guava" % "16.0.1",
       "com.fasterxml.jackson.core" % "jackson-core" % "2.9.8",
       "com.fasterxml.jackson.core" % "jackson-databind" % "2.9.8",
