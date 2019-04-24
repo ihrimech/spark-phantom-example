@@ -1,8 +1,6 @@
 package com.model
 
 import com.datastax.driver.core.{HostDistance, PoolingOptions, SocketOptions}
-import com.model.TmaxElements
-import com.outworkers.phantom.connectors.CassandraConnection
 import com.outworkers.phantom.database.{Database, DatabaseProvider}
 import com.outworkers.phantom.dsl.CassandraConnection
 
@@ -24,7 +22,7 @@ object DatabaseConnector {
     ))
 
   default.session.execute("CREATE TABLE IF NOT EXISTS foot.TmaxElements (id UUID PRIMARY KEY, elapsed VARCHAR, event_incident_typefk VARCHAR, match_id VARCHAR, player1 VARCHAR, subtype VARCHAR, team VARCHAR, type1 VARCHAR );")
-
+  val res = default.session.execute("select * from foot.TmaxElements;")
 }
 
 class TestDatabase(

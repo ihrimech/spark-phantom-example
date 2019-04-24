@@ -5,10 +5,8 @@ import org.apache.spark.streaming.kafka010._
 import com.model.{TestDbProvider, Tmax}
 import org.apache.kafka.common.TopicPartition
 import org.apache.kafka.common.serialization.StringDeserializer
-import com.outworkers.phantom.dsl._
 import org.apache.spark.{SparkConf, SparkContext}
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.{Await, Future}
+import scala.concurrent.Await
 import scala.concurrent.duration._
 
 

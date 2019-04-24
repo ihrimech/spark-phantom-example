@@ -31,7 +31,7 @@ lazy val app = (project in file(".")).
       "com.fasterxml.jackson.core" % "jackson-databind" % "2.9.8",
       "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.9.8"
     )
-  ) .aggregate(Producer, Consumer)
+  ).aggregate(Producer, Consumer)
 
 
 lazy val Producer = (project in file("Producer")).
@@ -45,13 +45,12 @@ lazy val Producer = (project in file("Producer")).
       "org.apache.spark" %% "spark-streaming-kafka-0-10" % "2.4.0",
       "org.apache.spark" %% "spark-streaming" % "2.4.1" % "provided"
 
-
     ),
     excludeDependencies ++= Seq(
       "org.slf4j" % "log4j-over-slf4j"
     ),
     dependencyOverrides ++= Seq(
-      
+
       "com.google.guava" % "guava" % "16.0.1",
       "com.fasterxml.jackson.core" % "jackson-core" % "2.9.8",
       "com.fasterxml.jackson.core" % "jackson-databind" % "2.9.8",
@@ -88,16 +87,18 @@ lazy val Data_model = (project in file("Data_model")).
   )
 
 
-lazy val Consumer =(project in file("Consumer")).
+lazy val Consumer = (project in file("Consumer")).
   settings(commonSettings: _*)
   .settings(
     name := "Consumer",
     libraryDependencies ++= Seq(
+      "org.elasticsearch" % "elasticsearch-spark-20_2.11" % "7.0.0",
       "org.apache.spark" %% "spark-sql" % "2.4.1",
       "com.outworkers" %% "phantom-dsl" % "2.40.0",
       "org.apache.kafka" %% "kafka" % "2.2.0",
       "org.apache.spark" %% "spark-streaming-kafka-0-10" % "2.4.0",
-      "org.apache.spark" %% "spark-streaming" % "2.4.1" 
+      "org.apache.spark" %% "spark-streaming" % "2.4.1"
+
 
 
     ),
