@@ -24,7 +24,7 @@ class TmaxDeserializer extends Deserializer[Tmax]{
   }
 
   override def close():Unit = {
-
+    // nothing to do
   }
 
 }

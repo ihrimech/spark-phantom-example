@@ -1,4 +1,5 @@
 import sbt.Keys.excludeDependencies
+import sbtassembly.AssemblyPlugin.autoImport.assemblyMergeStrategy
 import sbtassembly.MergeStrategy
 
 
@@ -57,6 +58,7 @@ lazy val Producer = (project in file("Producer")).
       "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.9.8"
     )
 
+  
   ).dependsOn(
   Data_model
 )

@@ -13,9 +13,10 @@ import scala.concurrent.duration._
 object Consumer extends App with TestDbProvider {
 
   val conf = new SparkConf(true)
-    .setAppName("seifapp")
+    .setAppName("Consumer")
     .setMaster("local[*]")
 
+  // Create the SparkContext and the StreamingContext
   val sc = new SparkContext(conf)
   val ssc = new StreamingContext(sc, Seconds(5))
 
@@ -23,6 +24,7 @@ object Consumer extends App with TestDbProvider {
   val preferredHosts = LocationStrategies.PreferConsistent
   val topics = List("test1")
 
+  //SparkStreaming configuration for KAFKA
   val kafkaParams = Map(
     "bootstrap.servers" -> "localhost:9092",
     "key.deserializer" -> classOf[StringDeserializer],
@@ -33,6 +35,7 @@ object Consumer extends App with TestDbProvider {
 
   val offsets = Map(new TopicPartition("test1", 0) -> 2L)
 
+  //Create the Dstream for SparkStreaming
   val dstream = KafkaUtils.createDirectStream[String, Tmax](
     ssc,
     preferredHosts,
@@ -45,6 +48,8 @@ object Consumer extends App with TestDbProvider {
       iter
         .map(record => record.value())
         .foreach { record =>
+
+          // Set the record in cassandra
             Await.result(db.TmaxConnector.myStore(record), 10 seconds)
         }
       }

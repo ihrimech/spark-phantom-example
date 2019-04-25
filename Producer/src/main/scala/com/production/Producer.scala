@@ -7,7 +7,6 @@ import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
 import org.apache.spark.{SparkConf, SparkContext}
 
 
-
 object Producer extends App {
 
   val topic = "test1"
@@ -15,20 +14,25 @@ object Producer extends App {
     .setAppName("CsvToKafka")
     .setMaster("local[*]")
 
+  // Create the SparkContext and the SparkContext
   val sc = new SparkContext(conf)
+
+  // Read the CSV file with the SparkContext
   val cross = sc.textFile(getClass.getResource("/soccer/card.csv").getPath)
   val crossDetail = cross
     .map(x => x.split(","))
-    .map(x =>Tmax(UUID.randomUUID(), x(1), x(2), x(3), x(4), x(5), x(6), x(7)))
+    .map(x => Tmax(UUID.randomUUID(), x(1), x(2), x(3), x(4), x(5), x(6), x(7)))
 
-
+  //KAFKA producer configuration
   val props = new Properties()
   props.put("bootstrap.servers", "localhost:9092")
   props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer")
   props.put("value.serializer", "com.production.TmaxSerializer")
 
+  //Create the KAFKA producer
   val producer = new KafkaProducer[String, Tmax](props)
 
+  //Send the record to the KAFKA consumer
   crossDetail.foreach(tmaxElement => {
     val record = new ProducerRecord(topic, "key", tmaxElement)
     producer.send(record)
