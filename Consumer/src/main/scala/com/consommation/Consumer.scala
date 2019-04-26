@@ -58,7 +58,7 @@ object Consumer extends App with TestDbProvider {
   }
 
   ssc.start
- ssc.awaitTermination()
+ //ssc.awaitTermination()
 
   // the above code is printing out topic details every 5 seconds
   // until you stop it.

@@ -63,7 +63,19 @@ lazy val Producer = (project in file("Producer")).
   Data_model
 )
 
-
+lazy val ElasticwithCassandra= (project in file("Elastic"))
+  .settings(
+    Seq(
+      version := "0.1-SNAPSHOT",
+      organization := "com.example",
+      scalaVersion := "2.11.12",
+      test in assembly := {}
+    ),
+    libraryDependencies ++= Seq("org.apache.spark" %% "spark-sql" % "2.4.1",
+      "com.datastax.spark" %% "spark-cassandra-connector" % "2.4.1",
+      "org.elasticsearch" %% "elasticsearch-spark-20" % "7.0.0"
+    )
+  )
 
 lazy val Data_model = (project in file("Data_model")).
   settings(commonSettings: _*)
