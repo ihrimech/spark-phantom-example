@@ -1,4 +1,4 @@
-package com.elastic
+package com.elasticDVF_Analysis
 
 import com.datastax.spark.connector.cql.CassandraConnectorConf
 import com.datastax.spark.connector.rdd.ReadConf
