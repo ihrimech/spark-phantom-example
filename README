@@ -1,0 +1,14 @@
+Simple Kafka Consumer-Producer example
+
+Documentation
+
+Steps to run the project:
+
+1.Download the CSV File :https://www.data.gouv.fr/fr/datasets/demandes-de-valeurs-foncieres-geolocalisees/
+  put it in the repo "DVF_Analysis/Producer/src/main/resources/soccer/"
+
+2.Run the zookeeper & kafka server
+  bin/zookeeper-server-start.sh config/zookeeper.properties
+  bin/kafka-server-start.sh config/server.properties
+
+3.Clone this repo https://github.com/ihrimech/spark-phantom-example.git

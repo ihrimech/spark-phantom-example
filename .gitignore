@@ -1,6 +1,7 @@
 ### Java, Scala, SBT
 *.class
 
+
 # Package Files #
 *.jar
 *.war
@@ -10,6 +11,9 @@
 hs_err_pid*
 
 *.log
+
+
+*.csv
 
 # sbt specific
 .cache

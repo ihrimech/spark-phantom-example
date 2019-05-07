@@ -19,13 +19,13 @@ object Elastic extends App {
   spark.setCassandraConf("Cluster1", "ks1", ReadConf.SplitSizeInMBParam.option(128))
 
   //Loading data from Cassandra
-  val rf = spark
+  val Df = spark
     .read
     .format("org.apache.spark.sql.cassandra")
-    .options(Map("table" -> "tmaxelements", "keyspace" -> "foot"))
+    .options(Map("table" -> "valeursfonciereselem", "keyspace" -> "immobilier"))
     .load()
 
   //Save data in the index of elasticsearch
-  rf.saveToEs("seif/docs")
+  Df.saveToEs("immobilier/docs")
 
 }
